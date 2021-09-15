@@ -26,12 +26,12 @@ items:
         "editable": true,
         "gnetId": null,
         "graphTooltip": 0,
-        "iteration": 1631736642546,
+        "iteration": 1631638940033,
         "links": [],
         "panels": [
           {
             "collapsed": false,
-            "datasource": null,
+            "datasource": "Prometheus",
             "gridPos": {
               "h": 1,
               "w": 24,
@@ -201,9 +201,9 @@ items:
             "targets": [
               {
                 "exemplar": true,
-                "expr": "sum(increase(http_request_duration_seconds_count{}[1m])) by (route, method)",
+                "expr": "sum(increase(http_request_duration_seconds_count{method=~\"$method\",route=~\"$route\",code=~\"$code\"}[1m])) by (route, method)",
                 "interval": "",
-                "legendFormat": "",
+                "legendFormat": "{{route}} ({{method}})",
                 "refId": "A"
               }
             ],
@@ -253,7 +253,7 @@ items:
           },
           {
             "collapsed": false,
-            "datasource": null,
+            "datasource": "Prometheus",
             "gridPos": {
               "h": 1,
               "w": 24,
@@ -266,7 +266,7 @@ items:
             "type": "row"
           },
           {
-            "datasource": null,
+            "datasource": "Prometheus",
             "fieldConfig": {
               "defaults": {
                 "color": {
@@ -332,7 +332,7 @@ items:
             "bars": false,
             "dashLength": 10,
             "dashes": false,
-            "datasource": null,
+            "datasource": "Prometheus",
             "decimals": 2,
             "fieldConfig": {
               "defaults": {
@@ -435,7 +435,7 @@ items:
             "bars": false,
             "dashLength": 10,
             "dashes": false,
-            "datasource": null,
+            "datasource": "Prometheus",
             "decimals": 2,
             "fieldConfig": {
               "defaults": {
@@ -534,7 +534,7 @@ items:
           },
           {
             "collapsed": false,
-            "datasource": null,
+            "datasource": "Prometheus",
             "gridPos": {
               "h": 1,
               "w": 24,
@@ -551,7 +551,7 @@ items:
             "bars": false,
             "dashLength": 10,
             "dashes": false,
-            "datasource": null,
+            "datasource": "Prometheus",
             "decimals": 3,
             "description": "",
             "fieldConfig": {
@@ -686,7 +686,7 @@ items:
             "bars": false,
             "dashLength": 10,
             "dashes": false,
-            "datasource": null,
+            "datasource": "Prometheus",
             "decimals": 3,
             "description": "",
             "fieldConfig": {
@@ -835,7 +835,7 @@ items:
                   "$__all"
                 ]
               },
-              "datasource": null,
+              "datasource": "Prometheus",
               "definition": "label_values(http_request_duration_seconds_bucket{route!~\"/metrics|/favicon.ico\"}, method)",
               "description": null,
               "error": null,
@@ -866,7 +866,7 @@ items:
                   "$__all"
                 ]
               },
-              "datasource": null,
+              "datasource": "Prometheus",
               "definition": "label_values(http_request_duration_seconds_bucket{route!~\"/metrics|/favicon.ico\"}, route)",
               "description": null,
               "error": null,
@@ -897,7 +897,7 @@ items:
                   "$__all"
                 ]
               },
-              "datasource": null,
+              "datasource": "Prometheus",
               "definition": "label_values(http_request_duration_seconds_bucket{route!~\"/metrics|/favicon.ico\"}, code)",
               "description": null,
               "error": null,
@@ -939,7 +939,7 @@ items:
         "timezone": "",
         "title": "NodeJS Web App Dashboard",
         "uid": "_tWOnYInz",
-        "version": 2
+        "version": 1
       }
   kind: ConfigMap
   metadata:
