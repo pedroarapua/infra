@@ -48,9 +48,6 @@ spec:
         - mountPath: /grafana-dashboard-definitions/0/nodejs-web-app-overview
           name: grafana-dashboard-nodejs-web-app-overview
           readOnly: false
-        - mountPath: /etc/grafana
-          name: grafana-config
-          readOnly: false
       volumes:
       - emptyDir: {}
         name: grafana-storage
@@ -63,6 +60,3 @@ spec:
       - configMap:
           name: grafana-dashboard-nodejs-web-app-overview
         name: grafana-dashboard-nodejs-web-app-overview
-      - name: grafana-config
-        secret:
-          secretName: grafana-config
