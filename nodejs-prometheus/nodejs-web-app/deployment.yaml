@@ -1,4 +1,4 @@
-apiVersion: apps/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: nodejs-web-app-deployment
@@ -6,9 +6,9 @@ spec:
   replicas: 2
   template:
     metadata:
-      labels: # labels to select/identify the deployment
+      labels:
         app: nodejs-web-app
-    spec:     # pod spec                  
+    spec:
       containers: 
       - name: nodejs-web-app
         image: pedroarapua/nodejs-prometheus:nodejs-web-app-latest
