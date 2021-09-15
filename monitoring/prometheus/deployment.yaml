@@ -15,11 +15,11 @@ spec:
         app.kubernetes.io/component: prometheus
         app.kubernetes.io/name: prometheus
         app.kubernetes.io/part-of: kube-prometheus
-        app.kubernetes.io/version: 2.30.0
+        app.kubernetes.io/version: v2.30.0
     spec:
       containers:
         - name: prometheus
-          image: prom/prometheus:2.30.0
+          image: prom/prometheus:v2.30.0
           args:
             - "--config.file=/etc/prometheus/prometheus.yml"
             - "--storage.tsdb.path=/prometheus/"
