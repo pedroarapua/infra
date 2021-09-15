@@ -4,6 +4,9 @@ metadata:
   name: nodejs-web-app-deployment
 spec:
   replicas: 2
+  selector:
+    matchLabels:
+      app: nodejs-web-app
   template:
     metadata:
       labels:
