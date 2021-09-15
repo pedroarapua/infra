@@ -26,7 +26,7 @@ items:
         "editable": true,
         "gnetId": null,
         "graphTooltip": 0,
-        "iteration": 1631638940033,
+        "iteration": 1631736642546,
         "links": [],
         "panels": [
           {
@@ -48,7 +48,7 @@ items:
             "bars": false,
             "dashLength": 10,
             "dashes": false,
-            "datasource": null,
+            "datasource": "Prometheus",
             "decimals": 2,
             "fieldConfig": {
               "defaults": {
@@ -152,7 +152,7 @@ items:
             "bars": false,
             "dashLength": 10,
             "dashes": false,
-            "datasource": null,
+            "datasource": "Prometheus",
             "decimals": 2,
             "fieldConfig": {
               "defaults": {
@@ -201,9 +201,9 @@ items:
             "targets": [
               {
                 "exemplar": true,
-                "expr": "sum(increase(http_request_duration_seconds_count{method=~\"$method\",route=~\"$route\",code=~\"$code\"}[1m])) by (route, method)",
+                "expr": "sum(increase(http_request_duration_seconds_count{}[1m])) by (route, method)",
                 "interval": "",
-                "legendFormat": "{{route}} ({{method}})",
+                "legendFormat": "",
                 "refId": "A"
               }
             ],
@@ -939,7 +939,7 @@ items:
         "timezone": "",
         "title": "NodeJS Web App Dashboard",
         "uid": "_tWOnYInz",
-        "version": 1
+        "version": 2
       }
   kind: ConfigMap
   metadata:
