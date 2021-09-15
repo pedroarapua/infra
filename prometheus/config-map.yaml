@@ -11,4 +11,4 @@ data:
     scrape_configs:
       - job_name: "nodejs-web-app"
         static_configs:
-          - targets: ["nodejs-web-app.nodejs-web-app.svc.cluster.local"]
+          - targets: ["nodejs-web-app-service.nodejs-prometheus.svc.cluster.local"]
