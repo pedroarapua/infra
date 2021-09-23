@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nodejs-web-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: nodejs-web-app
+  template:
+    metadata:
+      labels:
+        app: nodejs-web-app
+    spec:
+      containers: 
+      - name: nodejs-web-app
+        image: pedroarapua/nodejs-logs-fluent:nodejs-web-app-v1
+        ports:
+        - containerPort: 8080
