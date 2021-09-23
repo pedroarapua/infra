@@ -31,6 +31,10 @@ spec:
             value: "http"
           - name: FLUENTD_SYSTEMD_CONF
             value: disable
+          - name: FLUENTD_PROMETHEUS_CONF
+            value: disable
+          - name: FLUENT_CONTAINER_TAIL_PARSER_TYPE
+            value: "cri"
         resources:
           limits:
             memory: 512Mi
