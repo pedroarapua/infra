@@ -23,7 +23,7 @@ spec:
       - name: fluentd
         image: gcr.io/google-containers/fluentd-elasticsearch:v2.0.1
         env:
-          - name:  FLUENT_ELASTICSEARCH_HOST
+          - name: FLUENT_ELASTICSEARCH_HOST
             value: "elasticsearch.monitoring"
           - name:  FLUENT_ELASTICSEARCH_PORT
             value: "9200"
@@ -47,7 +47,7 @@ spec:
         - name: varlogcontainers
           mountPath: /var/log/containers
           readOnly: true
-        - name: config
+        - name: fluentdconf
           mountPath: /etc/fluent/config.d
       terminationGracePeriodSeconds: 30
       volumes:
@@ -57,6 +57,6 @@ spec:
       - name: varlogcontainers
         hostPath:
           path: /var/log/containers/
-      - name: config
+      - name: fluentdconf
         configMap:
-          name: fluentd-config
+          name: fluentdconf
