@@ -16,7 +16,7 @@ data:
       tag kubernetes.*
       read_from_head true
       format /^(?<time>.+) (?<stream>stdout|stderr) [^ ]* (?<log>.*)$/
-      time_format %d/%b/%Y:%H:%M:%S %z
+      time_format %Y-%m-%dT%H:%M:%S.%NZ
     </source>
   output.conf: |-
     # Enriches records with Kubernetes metadata
