@@ -38,6 +38,8 @@ spec:
             cpu: 100m
             memory: 200Mi
         volumeMounts:
+        - name: fluentconfig
+          mountPath: /fluentd/etc/
         - name: varlog
           mountPath: /var/log
         - name: varlibdockercontainers
@@ -51,3 +53,6 @@ spec:
       - name: varlibdockercontainers
         hostPath:
           path: /var/lib/docker/containers
+      - name: fluentconfig
+        configMap:
+          name: fluentdconf
