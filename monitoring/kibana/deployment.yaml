@@ -23,4 +23,4 @@ spec:
               name: http
           env:
             - name: ELASTICSEARCH_HOSTS
-              value: http://monitoring.elasticsearch
+              value: http://elasticsearch.monitoring:9200
