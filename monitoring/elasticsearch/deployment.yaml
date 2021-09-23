@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: elasticsearch
+  namespace: monitoring
+  labels:
+    name: elasticsearch
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: elasticsearch
+  template:
+    metadata:
+      labels:
+        name: elasticsearch
+    spec:
+      containers:
+        - name: elasticsearch
+           image: elasticsearch:7.13.1
+           ports:
+            - containerPort: 9200
+              name: http
+           env:
+            - name: discovery.type
+              value: 'single-node'
+            - name: bootstrap.memory_lock
+              value: 'true'
+            - name: ES_JAVA_OPTS
+              value: '-Xms512m -Xmx512m'
