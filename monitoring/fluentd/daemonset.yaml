@@ -33,6 +33,8 @@ spec:
             value: disable
           - name: FLUENTD_PROMETHEUS_CONF
             value: disable
+          - name: FLUENT_CONTAINER_TAIL_PARSER_TYPE
+            value: /^(?<time>.+) (?<stream>stdout|stderr) [^ ]* (?<log>.*)$/
         resources:
           limits:
             memory: 512Mi
