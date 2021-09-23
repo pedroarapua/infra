@@ -17,11 +17,11 @@ spec:
     spec:
       containers:
         - name: elasticsearch
-           image: elasticsearch:7.13.1
-           ports:
+          image: elasticsearch:7.13.1
+          ports:
             - containerPort: 9200
               name: http
-           env:
+          env:
             - name: discovery.type
               value: 'single-node'
             - name: bootstrap.memory_lock
