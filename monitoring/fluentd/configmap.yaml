@@ -46,7 +46,7 @@ data:
        ssl_verify "#{ENV['FLUENT_ELASTICSEARCH_SSL_VERIFY'] || 'true'}"
        reload_connections true
        logstash_format true
-       logstash_prefix fluentd.${record['kubernetes']['namespace_name']}.${record['kubernetes']['pod_name']}.%Y%m%d
+       logstash_prefix fluentd.${record['kubernetes']['namespace_name']}.${record['kubernetes']['pod_name']}
        <buffer>
            @type file
            path /var/log/fluentd-buffers/kubernetes.system.buffer
