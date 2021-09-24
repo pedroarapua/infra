@@ -18,7 +18,7 @@ data:
       format /^(?<time>.+) (?<stream>stdout|stderr) [^ ]* (?<log>.*)$/
       time_format %Y-%m-%dT%H:%M:%S.%L%z
     </source>
-  fluent.conf: |-
+  fluent.ignore.conf: |-
     # Enriches records with Kubernetes metadata
     <match fluent.**>
         # this tells fluentd to not output its log on stdout
@@ -36,6 +36,7 @@ data:
     <match kubernetes.var.log.containers.**argocd**.log>
     @type null
     </match>
+  fluent.conf: |-
     <match kubernetes.**>
        @type elasticsearch_dynamic
        @log_level info
