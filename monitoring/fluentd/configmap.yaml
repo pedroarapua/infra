@@ -99,7 +99,7 @@ data:
         @type forward
         <server>
           name fluentd
-          host fluentd.monitoring
+          host localhost
           port 24224
           weight 60
         </server>
