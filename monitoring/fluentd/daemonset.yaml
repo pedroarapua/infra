@@ -25,6 +25,8 @@ spec:
       containers:
       - name: fluentd
         image: gcr.io/google-containers/fluentd-elasticsearch:v2.0.1
+        ports:
+        - containerPort: 24231
         env:
           - name: FLUENT_ELASTICSEARCH_HOST
             value: "elasticsearch.monitoring"
