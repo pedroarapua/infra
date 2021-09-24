@@ -29,8 +29,6 @@ spec:
             value: "9200"
           - name: FLUENTD_SYSTEMD_CONF
             value: disable
-          - name: FLUENTD_PROMETHEUS_CONF
-            value: disable
           - name: FLUENT_ELASTICSEARCH_SSL_VERIFY
             value: "false"
           - name: FLUENT_CONTAINER_TAIL_PARSER_TYPE
