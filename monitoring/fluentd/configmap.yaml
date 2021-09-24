@@ -74,27 +74,54 @@ data:
     @type null
     </match>
     <match kubernetes.**>
-       @type elasticsearch_dynamic
-       @log_level info
-       include_tag_key true
-       host "#{ENV['FLUENT_ELASTICSEARCH_HOST']}"
-       port "#{ENV['FLUENT_ELASTICSEARCH_PORT']}"
-       scheme "#{ENV['FLUENT_ELASTICSEARCH_SCHEME'] || 'http'}"
-       ssl_verify "#{ENV['FLUENT_ELASTICSEARCH_SSL_VERIFY'] || 'true'}"
-       reload_connections true
-       logstash_format true
-       logstash_prefix fluentd.${record['kubernetes']['namespace_name']}.${record['kubernetes']['pod_name']}
-       <buffer>
-           @type file
-           path /var/log/fluentd-buffers/kubernetes.system.buffer
-           flush_mode interval
-           retry_type exponential_backoff
-           flush_thread_count 2
-           flush_interval 5s
-           retry_forever true
-           retry_max_interval 30
-           chunk_limit_size 2M
-           queue_limit_length 32
-           overflow_action block
-       </buffer>
+      @type copy
+      <store>
+        @type forward
+        <server>
+          name fluentd
+          host localhost
+          port 24224
+          weight 60
+        </server>
+      </store>
+      
+      <store>
+        @type prometheus
+        <metric>
+          name fluentd_output_status_num_records_total
+          type counter
+          desc The total number of outgoing records
+          <labels>
+            tag ${tag}
+            hostname ${hostname}
+          </labels>
+        </metric>
+      </store>
+      
+      <store>
+        @type elasticsearch_dynamic
+        @log_level info
+        include_tag_key true
+        host "#{ENV['FLUENT_ELASTICSEARCH_HOST']}"
+        port "#{ENV['FLUENT_ELASTICSEARCH_PORT']}"
+        scheme "#{ENV['FLUENT_ELASTICSEARCH_SCHEME'] || 'http'}"
+        ssl_verify "#{ENV['FLUENT_ELASTICSEARCH_SSL_VERIFY'] || 'true'}"
+        reload_connections true
+        logstash_format true
+        logstash_prefix fluentd.${record['kubernetes']['namespace_name']}.${record['kubernetes']['pod_name']}
+        <buffer>
+            @type file
+            path /var/log/fluentd-buffers/kubernetes.system.buffer
+            flush_mode interval
+            retry_type exponential_backoff
+            flush_thread_count 2
+            flush_interval 5s
+            retry_forever true
+            retry_max_interval 30
+            chunk_limit_size 2M
+            queue_limit_length 32
+            overflow_action block
+        </buffer>
+      </store>
+      
     </match>
