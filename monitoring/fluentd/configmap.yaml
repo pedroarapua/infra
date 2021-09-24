@@ -18,7 +18,7 @@ data:
       format /^(?<time>.+) (?<stream>stdout|stderr) [^ ]* (?<log>.*)$/
       time_format %Y-%m-%dT%H:%M:%S.%L%z
     </source>
-  elasticsearch.output.conf: |-
+  kubernetes.output.conf: |-
     # Enriches records with Kubernetes metadata
     <match fluent.**>
         # this tells fluentd to not output its log on stdout
@@ -33,6 +33,9 @@ data:
     <match kubernetes.var.log.containers.**monitoring**.log>
     @type null
     </match>
+    <match kubernetes.var.log.containers.**argocd**.log>
+    @type null
+    </match>
     <match kubernetes.**>
        @type elasticsearch_dynamic
        @log_level info
@@ -43,7 +46,7 @@ data:
        ssl_verify "#{ENV['FLUENT_ELASTICSEARCH_SSL_VERIFY'] || 'true'}"
        reload_connections true
        logstash_format true
-       logstash_prefix fluentd.${record['kubernetes']['pod_name']}.%Y%m%d
+       logstash_prefix fluentd.${record['kubernetes']['namespace_name']}.${record['kubernetes']['pod_name']}.%Y%m%d
        <buffer>
            @type file
            path /var/log/fluentd-buffers/kubernetes.system.buffer
