@@ -18,6 +18,27 @@ data:
       format /^(?<time>.+) (?<stream>stdout|stderr) [^ ]* (?<log>.*)$/
       time_format %Y-%m-%dT%H:%M:%S.%L%z
     </source>
+
+    <source>
+      @type forward
+      bind 0.0.0.0
+      port 24224
+    </source>
+
+    # expose metrics in prometheus format
+    <source>
+      @type prometheus
+      bind 0.0.0.0
+      port 24231
+      metrics_path /metrics
+    </source>
+    <source>
+      @type prometheus_output_monitor
+      interval 10
+      <labels>
+        hostname ${hostname}
+      </labels>
+    </source>
   fluent.conf: |-
     # Enriches records with Kubernetes metadata
     <match fluent.**>
