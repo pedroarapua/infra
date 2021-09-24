@@ -45,9 +45,25 @@ data:
         # this tells fluentd to not output its log on stdout
         @type null
     </match>  
+    
     <filter kubernetes.**>
       type kubernetes_metadata
     </filter>
+    
+    # count the number of incoming records per tag
+    <filter kubernetes.**>
+      @type prometheus
+      <metric>
+        name fluentd_input_status_num_records_total
+        type counter
+        desc The total number of incoming records
+        <labels>
+          tag ${tag}
+          hostname ${hostname}
+        </labels>
+      </metric>
+    </filter>
+
     <match kubernetes.var.log.containers.**kube-system**.log>
     @type null
     </match>
