@@ -13,6 +13,9 @@ spec:
     metadata:
       labels:
         app: fluentd
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "24231"
     spec:
       serviceAccount: fluentd
       serviceAccountName: fluentd
