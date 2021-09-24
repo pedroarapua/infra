@@ -6,7 +6,7 @@ metadata:
   labels:
     addonmanager.kubernetes.io/mode: Reconcile
 data:
-  containers.input.conf: |-
+  kubernetes.input.conf: |-
     <source>
       @type tail
       @id in_tail_container_logs
@@ -18,26 +18,43 @@ data:
       format /^(?<time>.+) (?<stream>stdout|stderr) [^ ]* (?<log>.*)$/
       time_format %Y-%m-%dT%H:%M:%S.%L%z
     </source>
-  output.conf: |-
+  elasticsearch.output.conf: |-
     # Enriches records with Kubernetes metadata
+    <match fluent.**>
+        # this tells fluentd to not output its log on stdout
+        @type null
+    </match>  
     <filter kubernetes.**>
       type kubernetes_metadata
     </filter>
-    <match **>
-       type elasticsearch
-       log_level info
+    <match kubernetes.var.log.containers.**kube-system**.log>
+    @type null
+    </match>
+    <match kubernetes.var.log.containers.**monitoring**.log>
+    @type null
+    </match>
+    <match kubernetes.**>
+       @type elasticsearch_dynamic
+       @log_level info
        include_tag_key true
-       host elasticsearch.monitoring.svc.cluster.local
-       port 9200
+       host "#{ENV['FLUENT_ELASTICSEARCH_HOST']}"
+       port "#{ENV['FLUENT_ELASTICSEARCH_PORT']}"
+       scheme "#{ENV['FLUENT_ELASTICSEARCH_SCHEME'] || 'http'}"
+       ssl_verify "#{ENV['FLUENT_ELASTICSEARCH_SSL_VERIFY'] || 'true'}"
+       reload_connections true
        logstash_format true
-       # Set the chunk limits.
-       buffer_chunk_limit 2M
-       buffer_queue_limit 8
-       flush_interval 5s
-       # Never wait longer than 5 minutes between retries.
-       max_retry_wait 30
-       # Disable the limit on the number of retries (retry forever).
-       disable_retry_limit
-       # Use multiple threads for processing.
-       num_threads 2
+       logstash_prefix ${record['kubernetes']['pod_name']}
+       <buffer>
+           @type file
+           path /var/log/fluentd-buffers/kubernetes.system.buffer
+           flush_mode interval
+           retry_type exponential_backoff
+           flush_thread_count 2
+           flush_interval 5s
+           retry_forever true
+           retry_max_interval 30
+           chunk_limit_size 2M
+           queue_limit_length 32
+           overflow_action block
+       </buffer>
     </match>
