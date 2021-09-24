@@ -6,7 +6,7 @@ metadata:
   labels:
     addonmanager.kubernetes.io/mode: Reconcile
 data:
-  kubernetes.input.conf: |-
+  kubernetes.conf: |-
     <source>
       @type tail
       @id in_tail_container_logs
@@ -18,7 +18,7 @@ data:
       format /^(?<time>.+) (?<stream>stdout|stderr) [^ ]* (?<log>.*)$/
       time_format %Y-%m-%dT%H:%M:%S.%L%z
     </source>
-  kubernetes.output.conf: |-
+  fluent.conf: |-
     # Enriches records with Kubernetes metadata
     <match fluent.**>
         # this tells fluentd to not output its log on stdout
