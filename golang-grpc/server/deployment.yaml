@@ -13,17 +13,10 @@ spec:
         app: golang-grpc
     spec:
       containers: 
-      - args:
-        - -Dspring.profiles.active=${ENV}
-        - -Dserver.port=5000
-        - -jar
-        - app.jar
-        command:
-        - "go"
-        - "run"
-        - "./helloworld/greeter_server/main.go"
-        name: golang-grpc
-        image: pedroarapua/golang-grpc:latest
+      - name: golang-grpc
+        image: pedroarapua/golang-grpc:v2
+        command: ["go"]
+        args: ["run", "./helloworld/greeter_server/main.go"]
         ports:
         - containerPort: 80
           protocol: TCP
