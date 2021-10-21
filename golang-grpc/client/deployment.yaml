@@ -14,7 +14,7 @@ spec:
     spec:
       containers: 
       - name: golang-grpc-client
-        image: pedroarapua/golang-grpc:v2
+        image: pedroarapua/golang-grpc:v3
         command: ["go"]
         args: ["run", "./helloworld/greeter_client/main.go"]
         env:
