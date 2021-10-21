@@ -9,6 +9,8 @@ spec:
       app: golang-grpc-client
   template:
     metadata:
+      annotations:
+        linkerd.io/inject: enabled
       labels:
         app: golang-grpc-client
     spec:
