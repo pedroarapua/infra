@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: golang-grpc-server
 spec:
-  replicas: 2
+  replicas: 4
   selector:
     matchLabels:
       app: golang-grpc-server
