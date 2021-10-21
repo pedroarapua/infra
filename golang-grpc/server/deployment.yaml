@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: golang-grpc
+  name: golang-grpc-server
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: golang-grpc
+      app: golang-grpc-server
   template:
     metadata:
       labels:
-        app: golang-grpc
+        app: golang-grpc-server
     spec:
       containers: 
-      - name: golang-grpc
+      - name: golang-grpc-server
         image: pedroarapua/golang-grpc:v2
         command: ["go"]
         args: ["run", "./helloworld/greeter_server/main.go"]
