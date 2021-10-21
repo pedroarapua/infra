@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: golang-grpc
+spec:
+  selector:
+    app: golang-grpc
+  ports:
+    - name: grpc
+      protocol: TCP
+      port: 80
+      targetPort: 80
