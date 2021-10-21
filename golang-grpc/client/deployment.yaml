@@ -19,4 +19,4 @@ spec:
         args: ["run", "./helloworld/greeter_client/main.go"]
         env:
         - name: API_URL
-          value: golang-grpc.golang-grpc-server.svc.local:80
+          value: golang-grpc-server.golang-grpc.svc.local:80
