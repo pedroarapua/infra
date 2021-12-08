@@ -27,7 +27,7 @@ spec:
         command: ["npm run consumer"]
         env:
         - name: MESSAGE_QUEUE
-          value: "amqp://admin:admin@rabbitmq.default.svc.cluster.local:5672"
+          value: "amqp://admin:admin@rabbitmq.rabbitmq.svc.cluster.local:5672"
 ---
 apiVersion: keda.sh/v1alpha1
 kind: ScaledObject
