@@ -19,4 +19,4 @@ spec:
         args: ["run", "producer"]
         env:
         - name: MESSAGE_QUEUE
-          value: "amqp://admin:admin@rabbitmq.default.svc.cluster.local:5672"
+          value: "amqp://admin:admin@rabbitmq.rabbitmq.svc.cluster.local:5672"
