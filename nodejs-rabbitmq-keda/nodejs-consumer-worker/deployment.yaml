@@ -55,6 +55,6 @@ metadata:
 spec:
   secretTargetRef:
     - parameter: host
-      name: rabbitmq-consumer-secret
+      name: nodejs-consumer-worker-secret
       key: RabbitMqHost
 ---
