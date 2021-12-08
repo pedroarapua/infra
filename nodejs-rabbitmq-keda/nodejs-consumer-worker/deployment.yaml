@@ -46,7 +46,7 @@ spec:
         queueName: queue_number
         queueLength: "5"
       authenticationRef:
-        name: rabbitmq-consumer-trigger
+        name: nodejs-consumer-worker-trigger
 ---
 apiVersion: keda.sh/v1alpha1
 kind: TriggerAuthentication
