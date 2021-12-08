@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Secret
 metadata:
-  name: nodejs-consumer-worker-secret
+  name: rabbitmq-consumer-secret
 data:
   RabbitMqHost: YW1xcDovL2FkbWluOmFkbWluQHJhYmJpdG1xLnJhYmJpdG1xLnN2Yy5jbHVzdGVyLmxvY2FsOjU2NzI=
 ---
@@ -33,7 +33,7 @@ spec:
 apiVersion: keda.sh/v1alpha1
 kind: ScaledObject
 metadata:
-  name: nodejs-consumer-worker-scale
+  name: rabbitmq-consumer-scale
 spec:
   scaleTargetRef:
     name: nodejs-consumer-worker
@@ -47,15 +47,15 @@ spec:
         queueLength: "5"
         connectionFromEnv: $RabbitMqHost
       authenticationRef:
-        name: nodejs-consumer-worker-trigger
+        name: rabbitmq-consumer-trigger
 ---
 apiVersion: keda.sh/v1alpha1
 kind: TriggerAuthentication
 metadata:
-  name: nodejs-consumer-worker-trigger
+  name: rabbitmq-consumer-trigger
 spec:
   secretTargetRef:
     - parameter: host
-      name: nodejs-consumer-worker-secret
+      name: rabbitmq-consumer-secret
       key: RabbitMqHost
 ---
