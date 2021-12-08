@@ -45,6 +45,7 @@ spec:
       metadata:
         queueName: queue_number
         queueLength: "5"
+        connectionFromEnv: $RabbitMqHost
       authenticationRef:
         name: rabbitmq-consumer-trigger
 ---
