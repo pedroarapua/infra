@@ -24,7 +24,8 @@ spec:
       containers:
         - name: nodejs-consumer-worker
         image: pedroarapua/nodejs-rabbitmq:latest
-        command: ["npm run consumer"]
+        command: ["npm"]
+        args: ["run", "consumer"]
         env:
         - name: MESSAGE_QUEUE
           value: "amqp://admin:admin@rabbitmq.rabbitmq.svc.cluster.local:5672"

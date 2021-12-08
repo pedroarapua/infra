@@ -13,9 +13,10 @@ spec:
         app: nodejs-producer-worker
     spec:
       containers: 
-      - name: nodejs-web-app
+      - name: nodejs-producer-worker
         image: pedroarapua/nodejs-rabbitmq:latest
-        command: ["npm run producer"]
+        command: ["npm"]
+        args: ["run", "producer"]
         env:
         - name: MESSAGE_QUEUE
           value: "amqp://admin:admin@rabbitmq.default.svc.cluster.local:5672"
