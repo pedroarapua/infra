@@ -22,7 +22,7 @@ spec:
         app: nodejs-consumer-worker
     spec:
       containers:
-        - name: nodejs-consumer-worker
+      - name: nodejs-consumer-worker
         image: pedroarapua/nodejs-rabbitmq:latest
         command: ["npm"]
         args: ["run", "consumer"]
