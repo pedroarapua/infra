@@ -47,12 +47,12 @@ spec:
         queueLength: "5"
         connectionFromEnv: $RabbitMqHost
       authenticationRef:
-        name: rabbitmq-consumer-trigger
+        name: nodejs-consumer-worker-trigger
 ---
 apiVersion: keda.sh/v1alpha1
 kind: TriggerAuthentication
 metadata:
-  name: rabbitmq-consumer-trigger
+  name: nodejs-consumer-worker-trigger
 spec:
   secretTargetRef:
     - parameter: host
