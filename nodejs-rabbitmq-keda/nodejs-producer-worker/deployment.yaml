@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nodejs-producer-worker
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nodejs-producer-worker
+  template:
+    metadata:
+      labels:
+        app: nodejs-producer-worker
+    spec:
+      containers: 
+      - name: nodejs-web-app
+        image: pedroarapua/nodejs-rabbitmq:latest
+        command: ["npm run producer"]
+        env:
+        - name: MESSAGE_QUEUE
+          value: "amqp://admin:admin@rabbitmq.default.svc.cluster.local:5672"
