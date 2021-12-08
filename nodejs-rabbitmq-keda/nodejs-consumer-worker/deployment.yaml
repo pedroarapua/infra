@@ -3,7 +3,7 @@ kind: Secret
 metadata:
   name: nodejs-consumer-worker-secret
 data:
-  RabbitMqHost: YW1xcDovL2FkbWluOmFkbWluQHJhYmJpdG1xLmRlZmF1bHQuc3ZjLmNsdXN0ZXIubG9jYWw6NTY3Mg==
+  RabbitMqHost: YW1xcDovL2FkbWluOmFkbWluQHJhYmJpdG1xLnJhYmJpdG1xLnN2Yy5jbHVzdGVyLmxvY2FsOjU2NzI=
 ---
 apiVersion: apps/v1
 kind: Deployment
