@@ -33,7 +33,7 @@ spec:
 apiVersion: keda.sh/v1alpha1
 kind: ScaledObject
 metadata:
-  name: nodejs-consumer-worker-scale
+  name: rabbitmq-consumer-scale
 spec:
   scaleTargetRef:
     name: nodejs-consumer-worker
