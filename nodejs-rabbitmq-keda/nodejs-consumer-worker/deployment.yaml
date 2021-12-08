@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Secret
 metadata:
-  name: rabbitmq-consumer-secret
+  name: nodejs-consumer-worker-secret
 data:
   RabbitMqHost: YW1xcDovL2FkbWluOmFkbWluQHJhYmJpdG1xLnJhYmJpdG1xLnN2Yy5jbHVzdGVyLmxvY2FsOjU2NzI=
 ---
@@ -56,6 +56,6 @@ metadata:
 spec:
   secretTargetRef:
     - parameter: host
-      name: rabbitmq-consumer-secret
+      name: nodejs-consumer-worker-secret
       key: RabbitMqHost
 ---
