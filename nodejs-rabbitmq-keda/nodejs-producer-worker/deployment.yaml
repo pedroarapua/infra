@@ -1,3 +1,11 @@
+
+apiVersion: v1
+kind: Secret
+metadata:
+  name: nodejs-producer-worker-secret
+data:
+  MESSAGE_QUEUE: YW1xcDovL2FkbWluOmFkbWluQHJhYmJpdG1xLnJhYmJpdG1xLnN2Yy5jbHVzdGVyLmxvY2FsOjU2NzI=
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -17,6 +25,6 @@ spec:
         image: pedroarapua/nodejs-rabbitmq:latest
         command: ["npm"]
         args: ["run", "producer"]
-        env:
-        - name: MESSAGE_QUEUE
-          value: "amqp://admin:admin@rabbitmq.rabbitmq.svc.cluster.local:5672"
+        envFrom:
+          - secretRef:
+              name: nodejs-producer-worker-secret

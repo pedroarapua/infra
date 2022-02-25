@@ -3,7 +3,7 @@ kind: Secret
 metadata:
   name: nodejs-consumer-worker-secret
 data:
-  RabbitMqHost: YW1xcDovL2FkbWluOmFkbWluQHJhYmJpdG1xLnJhYmJpdG1xLnN2Yy5jbHVzdGVyLmxvY2FsOjU2NzI=
+  RABBITMQ_URL: YW1xcDovL2FkbWluOmFkbWluQHJhYmJpdG1xLnJhYmJpdG1xLnN2Yy5jbHVzdGVyLmxvY2FsOjU2NzI=
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -43,9 +43,10 @@ spec:
   triggers:
     - type: rabbitmq
       metadata:
+        protocol: amqp
         queueName: queue_number
-        queueLength: "5"
-        connectionFromEnv: $RabbitMqHost
+        mode: QueueLength
+        value: "5"
       authenticationRef:
         name: nodejs-consumer-worker-trigger
 ---
@@ -57,5 +58,5 @@ spec:
   secretTargetRef:
     - parameter: host
       name: nodejs-consumer-worker-secret
-      key: RabbitMqHost
+      key: RABBITMQ_URL
 ---
