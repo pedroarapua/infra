@@ -1,0 +1,67 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: sqs-keda
+  name: sqs-keda-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sqs-keda-deployment
+  template:
+    metadata:
+      labels:
+        app: sqs-keda-deployment
+    spec:
+      containers: 
+      - name: busybox
+        image: busybox
+        command:
+          - sleep
+          - "3600"
+
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  namespace: sqs-keda
+  name: sqs-keda
+data:
+  KEDA_AWS_ACCESS_KEY_ID: ""
+  KEDA_AWS_SECRET_KEY_ID: ""
+
+---
+# Source: base-webapp/templates/keda-hpa.yaml
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: sqs-keda-scale
+spec:
+  scaleTargetRef:
+    name: sqs-keda-deployment
+  cooldownPeriod: 300
+  pollingInterval: 30
+  maxReplicaCount: 5
+  minReplicaCount: 0
+  triggers:
+  - type: aws-sqs-queue
+    metadata:
+      queueURL: "url"
+      queueLength: "5"
+      awsRegion: "us-east-1"
+    authenticationRef:
+      name: sqs-keda-trigger
+---
+# Source: base-webapp/templates/keda-hpa.yaml
+apiVersion: keda.sh/v1alpha1
+kind: TriggerAuthentication
+metadata:
+  name: sqs-keda-trigger
+spec:
+  secretTargetRef:
+    - parameter: awsAccessKeyID
+      name: sqs-keda
+      key: "KEDA_AWS_ACCESS_KEY_ID"
+    - parameter: awsSecretAccessKey
+      name: sqs-keda
+      key: "KEDA_AWS_SECRET_KEY_ID"
