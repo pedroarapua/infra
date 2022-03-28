@@ -1,0 +1,65 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: pubsub-keda
+  name: pubsub-keda-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pubsub-keda-deployment
+  template:
+    metadata:
+      labels:
+        app: pubsub-keda-deployment
+    spec:
+      containers: 
+      - name: busybox
+        image: busybox
+        command:
+          - sleep
+          - "3600"
+
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  namespace: pubsub-keda
+  name: pubsub-keda-secret
+data:
+  GOOGLE_APPLICATION_CREDENTIALS: ""
+
+---
+# Source: base-webapp/templates/keda-hpa.yaml
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  namespace: pubsub-keda
+  name: pubsub-keda-scale
+spec:
+  scaleTargetRef:
+    name: pubsub-keda-deployment
+  cooldownPeriod: 300
+  pollingInterval: 30
+  maxReplicaCount: 5
+  minReplicaCount: 0
+  triggers:
+  - type: gcp-pubsub
+    metadata:
+      mode: SubscriptionSize
+      value: "5"
+      subscriptionName: "buzzorder-sub-orders-01"
+    authenticationRef:
+      name: pubsub-keda-trigger
+---
+# Source: base-webapp/templates/keda-hpa.yaml
+apiVersion: keda.sh/v1alpha1
+kind: TriggerAuthentication
+metadata:
+  namespace: pubsub-keda
+  name: pubsub-keda-trigger
+spec:
+  secretTargetRef:
+    - parameter: GoogleApplicationCredentials
+      name: "pubsub-keda-secret"
+      key: "GOOGLE_APPLICATION_CREDENTIALS"
