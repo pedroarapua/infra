@@ -1,0 +1,43 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cron-app
+  namespace: cron-keda
+  labels:
+    app: cron-app
+spec:
+  selector:
+    matchLabels:
+      app: cron-app
+  template:
+    metadata:
+      labels:
+        app: cron-app
+    spec:
+      containers:
+      - name: cron-app
+        image: pedroarapua/nodejs-rabbitmq:latest
+        command: ["npm"]
+        args: ["run", "consumer"]
+        env:
+        - name: MESSAGE_QUEUE
+          value: "amqp://admin:admin@rabbitmq.rabbitmq.svc.cluster.local:5672"
+---
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: cron-scaledobject
+  namespace: cron-keda
+spec:
+  scaleTargetRef:
+    name: cron-app
+  minReplicaCount: 1
+  maxReplicaCount: 5
+  triggers:
+  - type: cron
+    metadata:
+      timezone: America/Argentina/Buenos_Aires
+      start: 35 13 * * *
+      end: 40 13 * * *
+      desiredReplicas: "0"
